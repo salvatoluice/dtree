@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dtree/main.dart';
-import 'package:dtree/screens/home_content.dart'; 
+import 'package:dtree/screens/home_content.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -35,7 +35,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_selectedIndex], // Use selected screen based on index
+      body: SingleChildScrollView(
+        child: _screens[_selectedIndex], 
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: _bottomNavBarItems,
         currentIndex: _selectedIndex,

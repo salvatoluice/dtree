@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'package:dtree/models/store.dart';
+import 'package:dtree/services/store_service.dart';
+import 'package:dtree/widgets/store_card.dart';
+
 
 class HomeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
-        color: Colors.grey[100],
-        child: SingleChildScrollView(
+      child: SingleChildScrollView(
+        child: Container(
+          color: Colors.grey[100],
+          padding: EdgeInsets.symmetric(vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -88,28 +96,7 @@ class HomeContent extends StatelessWidget {
               ),
               // Categories Container
               CategoriesContainer(),
-              Container(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 16),
-                    Text(
-                      'Welcome to dtree',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    Text(
-                      'Here you can explore...',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    // Add more content here
-                  ],
-                ),
-              ),
+              StoresList(),
             ],
           ),
         ),
@@ -117,7 +104,6 @@ class HomeContent extends StatelessWidget {
     );
   }
 }
-
 class CategoriesContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -188,6 +174,44 @@ class CategoryItem extends StatelessWidget {
         SizedBox(height: 8),
         Text(label),
       ],
+    );
+  }
+}
+
+
+
+class StoresList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Store>>(
+      future: StoreService.fetchStores(),
+      builder: (context, AsyncSnapshot<List<Store>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
+        } else {
+          final List<Store> stores = snapshot.data!;
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: stores.length,
+            itemBuilder: (context, index) {
+              return StoreCard(
+                name: stores[index].name,
+                storeType: stores[index].storeType,
+                imageUrl: stores[index].imageUrl,
+                onPressed: () {
+                  // Handle onPressed event for this store
+                },
+              );
+            },
+          );
+        }
+      },
     );
   }
 }
