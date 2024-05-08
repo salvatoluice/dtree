@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dtree/main.dart';
+import 'package:dtree/screens/home_content.dart'; // Import the HomeContent widget
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // List of screens for each bottom nav item
   List<Widget> _screens = [
-    Placeholder(), // Placeholder for Home screen
+    HomeContent(), // Use HomeContent widget for Home screen
     Placeholder(), // Placeholder for Deals screen
     Placeholder(), // Placeholder for Stores screen
     Placeholder(), // Placeholder for More screen
@@ -35,30 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 16),
-              Text(
-                'Welcome to dtree',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Here you can explore...',
-                style: TextStyle(fontSize: 18),
-              ),
-              // Add more content here
-            ],
-          ),
-        ),
-      ),
+      body: _screens[_selectedIndex], // Use selected screen based on index
       bottomNavigationBar: BottomNavigationBar(
         items: _bottomNavBarItems,
         currentIndex: _selectedIndex,
