@@ -35,19 +35,38 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // title: Text('Home'),
-        backgroundColor: primaryColor,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 16),
+              Text(
+                'Welcome to dtree',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Here you can explore...',
+                style: TextStyle(fontSize: 18),
+              ),
+              // Add more content here
+            ],
+          ),
+        ),
       ),
-      body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: _bottomNavBarItems,
         currentIndex: _selectedIndex,
         onTap: _onBottomNavItemTapped,
-        selectedItemColor: primaryColor, // Color of selected item
-        unselectedItemColor: Colors.grey, // Color of unselected items
-        showUnselectedLabels: true, // Show labels for unselected items
-        type: BottomNavigationBarType.fixed, // Ensure all items are visible
+        selectedItemColor: primaryColor,
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }

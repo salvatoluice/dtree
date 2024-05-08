@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dtree/screens/registration_screen.dart';
 import 'package:dtree/screens/home_screen.dart';
 import 'package:dtree/screens/login_screen.dart';
+import 'package:flutter/services.dart'; // Import the services.dart package
 
 const Color primaryColor = Color(0xFFD83A3E);
 const Color secondaryColor = Color(0xFFFDEDEE);
@@ -9,6 +10,9 @@ const Color fastColor = Color(0xFF1E2023);
 const Color thirdColor = Color(0xFFFF9021);
 
 void main() {
+   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: primaryColor, // Set the color you want
+  ));
   runApp(MyApp());
 }
 
