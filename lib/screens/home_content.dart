@@ -33,20 +33,6 @@ class HomeContent extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          padding: EdgeInsets.all(1),
-                          child: IconButton(
-                            icon: Icon(Icons.settings),
-                            color: Colors.black,
-                            onPressed: () {
-                              // Handle settings icon onPressed event
-                            },
-                          ),
-                        ),
                         SizedBox(width: 8),
                         Container(
                           decoration: BoxDecoration(
@@ -58,7 +44,8 @@ class HomeContent extends StatelessWidget {
                             icon: Icon(Icons.person),
                             color: Colors.black,
                             onPressed: () {
-                              // Handle profile icon onPressed event
+                              // Open the drawer using the GlobalKey
+                              Scaffold.of(context).openEndDrawer();
                             },
                           ),
                         ),
@@ -158,6 +145,7 @@ class HomeContent extends StatelessWidget {
     );
   }
 }
+
 
 class DiscountList extends StatelessWidget {
   @override
