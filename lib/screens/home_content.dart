@@ -3,7 +3,9 @@ import 'package:dtree/main.dart';
 import 'package:dtree/models/store.dart';
 import 'package:dtree/services/store_service.dart';
 import 'package:dtree/widgets/store_card.dart';
-
+import 'package:dtree/widgets/discount_card.dart';
+import 'package:dtree/models/discount.dart';
+import 'package:dtree/services/discount_service.dart';
 
 class HomeContent extends StatelessWidget {
   @override
@@ -22,23 +24,52 @@ class HomeContent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Top stores | 2024', // Header text
+                      'd-tree',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: primaryColor,
                       ),
                     ),
-                    Text(
-                      'See all',
-                      style: TextStyle(
-                        color: primaryColor, 
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          padding: EdgeInsets.all(1),
+                          child: IconButton(
+                            icon: Icon(Icons.settings),
+                            color: Colors.black,
+                            onPressed: () {
+                              // Handle settings icon onPressed event
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          padding: EdgeInsets.all(1),
+                          child: IconButton(
+                            icon: Icon(Icons.person),
+                            color: Colors.black,
+                            onPressed: () {
+                              // Handle profile icon onPressed event
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
+              // Search bar
+              SizedBox(width: 8),
+
               // Search bar
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 16),
@@ -68,7 +99,7 @@ class HomeContent extends StatelessWidget {
               ),
               // Categories Container
               CategoriesContainer(),
-              // Header and "See all" text
+              // Header and "See all" text for stores
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
@@ -85,7 +116,7 @@ class HomeContent extends StatelessWidget {
                     Text(
                       'See all',
                       style: TextStyle(
-                        color: primaryColor, // Use primaryColor for text color
+                        color: primaryColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -94,6 +125,32 @@ class HomeContent extends StatelessWidget {
               ),
               // Stores list
               StoresList(),
+              // Header and "See all" text for discounts
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Top discounts | 2024', // Header text
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      'See all',
+                      style: TextStyle(
+                        color: primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Discounts list
+              DiscountList(),
             ],
           ),
         ),
@@ -102,7 +159,51 @@ class HomeContent extends StatelessWidget {
   }
 }
 
-
+class DiscountList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Discount>>(
+      future: DiscountService.fetchDiscounts(),
+      builder: (context, AsyncSnapshot<List<Discount>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
+        } else {
+          final List<Discount> discounts = snapshot.data!;
+          return SingleChildScrollView(
+            // Wrap with SingleChildScrollView
+            child: Column(
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics:
+                      NeverScrollableScrollPhysics(), // Disable scrolling of inner ListView
+                  itemCount: discounts.length > 6 ? 6 : discounts.length,
+                  itemBuilder: (context, index) {
+                    return DiscountCard(
+                      discount: discounts[index],
+                      onSeeDetailsPressed: () {
+                        // Handle see details onPressed event
+                      },
+                      onGetDiscountPressed: () {
+                        // Handle get discount onPressed event
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
+          );
+        }
+      },
+    );
+  }
+}
 
 class CategoriesContainer extends StatelessWidget {
   @override

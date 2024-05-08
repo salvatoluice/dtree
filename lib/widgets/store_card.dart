@@ -74,7 +74,7 @@ class StoreCard extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius:
-                    BorderRadius.circular(20), 
+                    BorderRadius.circular(10), 
               ),
               minimumSize: Size(double.infinity, 36), 
               backgroundColor: primaryColor, 
