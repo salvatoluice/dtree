@@ -1,7 +1,6 @@
-// lib/main.dart
-
 import 'package:flutter/material.dart';
 import 'package:dtree/screens/registration_screen.dart';
+import 'package:dtree/screens/home_screen.dart';
 import 'package:dtree/screens/login_screen.dart';
 
 const Color primaryColor = Color(0xFFD83A3E);
@@ -21,8 +20,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginScreen(),
+      home: HomeScreen(),
+      debugShowCheckedModeBanner: false,
       routes: {
+        '/home': (context) => HomeScreen(),
         '/register': (context) => RegistrationScreen(),
         '/login': (context) => LoginScreen(),
       },
