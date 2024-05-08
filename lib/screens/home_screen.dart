@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dtree/main.dart';
-import 'package:dtree/screens/home_content.dart'; // Import the HomeContent widget
+import 'package:dtree/screens/home_content.dart'; 
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -10,9 +10,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  // List of screens for each bottom nav item
   List<Widget> _screens = [
-    HomeContent(), // Use HomeContent widget for Home screen
+    HomeContent(),
     Placeholder(), // Placeholder for Deals screen
     Placeholder(), // Placeholder for Stores screen
     Placeholder(), // Placeholder for More screen
