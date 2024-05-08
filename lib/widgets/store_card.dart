@@ -31,8 +31,8 @@ class StoreCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (imageUrl.isNotEmpty)
             Image.network(
@@ -48,28 +48,26 @@ class StoreCard extends StatelessWidget {
               color: Colors.grey[200],
               child: Icon(Icons.store, color: Colors.grey),
             ),
-          SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  storeType,
-                  style: TextStyle(
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
+          SizedBox(height: 16),
+          Text(
+            name,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
             ),
+            maxLines: 1, 
+            overflow: TextOverflow.ellipsis, 
           ),
+          SizedBox(height: 4),
+          Text(
+            storeType,
+            style: TextStyle(
+              color: Colors.grey,
+            ),
+            maxLines: 1, 
+            overflow: TextOverflow.ellipsis, 
+          ),
+          SizedBox(height: 16),
           ElevatedButton(
             onPressed: onPressed,
             child: Text('View'),

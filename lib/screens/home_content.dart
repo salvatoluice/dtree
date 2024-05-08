@@ -178,7 +178,6 @@ class CategoryItem extends StatelessWidget {
   }
 }
 
-
 class StoresList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -195,20 +194,26 @@ class StoresList extends StatelessWidget {
           );
         } else {
           final List<Store> stores = snapshot.data!;
-          return ListView(
+          return GridView.builder(
             shrinkWrap: true,
-            physics: ScrollPhysics(), // Added to allow pull-to-refresh
-            children: [
-              for (int index = 0; index < stores.length; index++)
-                StoreCard(
-                  name: stores[index].name,
-                  storeType: stores[index].storeType,
-                  imageUrl: stores[index].imageUrl,
-                  onPressed: () {
-                    // Handle onPressed event for this store
-                  },
-                ),
-            ],
+            physics: NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 1,
+              mainAxisSpacing: 2,
+              childAspectRatio: 0.75, 
+            ),
+            itemCount: stores.length,
+            itemBuilder: (context, index) {
+              return StoreCard(
+                name: stores[index].name,
+                storeType: stores[index].storeType,
+                imageUrl: stores[index].imageUrl,
+                onPressed: () {
+                  // Handle onPressed event for this store
+                },
+              );
+            },
           );
         }
       },
