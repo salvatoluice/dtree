@@ -2,20 +2,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:dtree/models/store.dart'; 
 
-// class StoreService {
-//   static Future<List<Store>> fetchStores() async {
-//     final response =
-//         await http.get(Uri.parse('https://d3-api.onrender.com/api/v1/stores'));
-//     if (response.statusCode == 200) {
-//       final List<dynamic> data = json.decode(response.body);
-//       return data.map((storeJson) => Store.fromJson(storeJson)).toList();
-//     } else {
-//       throw Exception('Failed to load stores');
-//     }
-//   }
-// }
-
-
 class StoreService {
   static Future<List<Store>> fetchStores() async {
     final response = await http.get(Uri.parse('https://d3-api.onrender.com/api/v1/stores'));

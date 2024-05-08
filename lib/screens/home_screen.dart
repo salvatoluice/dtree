@@ -12,12 +12,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> _screens = [
     HomeContent(),
-    Placeholder(), // Placeholder for Deals screen
-    Placeholder(), // Placeholder for Stores screen
-    Placeholder(), // Placeholder for More screen
+    Placeholder(),
+    Placeholder(),
+    Placeholder(),
   ];
 
-  // List of bottom nav items
   List<BottomNavigationBarItem> _bottomNavBarItems = [
     BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
     BottomNavigationBarItem(icon: Icon(Icons.local_offer), label: 'Deals'),
@@ -25,7 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
     BottomNavigationBarItem(icon: Icon(Icons.more_horiz), label: 'More'),
   ];
 
-  // Handle bottom nav item selection
   void _onBottomNavItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -35,8 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: _screens[_selectedIndex], 
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: SingleChildScrollView(
+              child: _screens[_selectedIndex],
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: _bottomNavBarItems,

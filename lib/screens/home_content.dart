@@ -179,8 +179,43 @@ class CategoryItem extends StatelessWidget {
 }
 
 
-
 class StoresList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Store>>(
+      future: StoreService.fetchStores(),
+      builder: (context, AsyncSnapshot<List<Store>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
+        } else {
+          final List<Store> stores = snapshot.data!;
+          return ListView(
+            shrinkWrap: true,
+            physics: ScrollPhysics(), // Added to allow pull-to-refresh
+            children: [
+              for (int index = 0; index < stores.length; index++)
+                StoreCard(
+                  name: stores[index].name,
+                  storeType: stores[index].storeType,
+                  imageUrl: stores[index].imageUrl,
+                  onPressed: () {
+                    // Handle onPressed event for this store
+                  },
+                ),
+            ],
+          );
+        }
+      },
+    );
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Store>>(
@@ -214,4 +249,3 @@ class StoresList extends StatelessWidget {
       },
     );
   }
-}
