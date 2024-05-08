@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
+import 'package:dtree/main.dart';
 import 'package:dtree/models/store.dart';
 import 'package:dtree/services/store_service.dart';
 import 'package:dtree/widgets/store_card.dart';
@@ -24,45 +22,19 @@ class HomeContent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'dtree',
+                      'Top stores | 2024', // Header text
                       style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
-                    Row(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          padding: EdgeInsets.all(1),
-                          child: IconButton(
-                            icon: Icon(Icons.settings),
-                            color: Colors.black,
-                            onPressed: () {
-                              // Handle settings icon onPressed event
-                            },
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          padding: EdgeInsets.all(1),
-                          child: IconButton(
-                            icon: Icon(Icons.person),
-                            color: Colors.black,
-                            onPressed: () {
-                              // Handle profile icon onPressed event
-                            },
-                          ),
-                        ),
-                      ],
+                    Text(
+                      'See all',
+                      style: TextStyle(
+                        color: primaryColor, 
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -96,6 +68,31 @@ class HomeContent extends StatelessWidget {
               ),
               // Categories Container
               CategoriesContainer(),
+              // Header and "See all" text
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Top stores | 2024', // Header text
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      'See all',
+                      style: TextStyle(
+                        color: primaryColor, // Use primaryColor for text color
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Stores list
               StoresList(),
             ],
           ),
@@ -104,6 +101,9 @@ class HomeContent extends StatelessWidget {
     );
   }
 }
+
+
+
 class CategoriesContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -199,11 +199,13 @@ class StoresList extends StatelessWidget {
             physics: NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              crossAxisSpacing: 1,
+              crossAxisSpacing: 0.1,
               mainAxisSpacing: 2,
-              childAspectRatio: 0.75, 
+              childAspectRatio: 0.8,
             ),
-            itemCount: stores.length,
+            itemCount: stores.length >= 4
+                ? 4
+                : stores.length, 
             itemBuilder: (context, index) {
               return StoreCard(
                 name: stores[index].name,

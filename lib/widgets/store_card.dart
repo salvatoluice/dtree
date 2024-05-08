@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dtree/main.dart';
 
 class StoreCard extends StatelessWidget {
   final String name;
@@ -67,10 +68,21 @@ class StoreCard extends StatelessWidget {
             maxLines: 1, 
             overflow: TextOverflow.ellipsis, 
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 12),
           ElevatedButton(
             onPressed: onPressed,
-            child: Text('View'),
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(20), 
+              ),
+              minimumSize: Size(double.infinity, 36), 
+              backgroundColor: primaryColor, 
+            ),
+            child: Text(
+              'View',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
         ],
       ),
