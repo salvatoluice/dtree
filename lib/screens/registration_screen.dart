@@ -1,8 +1,7 @@
-// lib/screens/registration_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:dtree/models/user_model.dart';
 import 'package:dtree/services/auth_service.dart';
+import 'package:dtree/main.dart';
 
 class RegistrationScreen extends StatelessWidget {
   final TextEditingController firstNameController = TextEditingController();
@@ -17,6 +16,7 @@ class RegistrationScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Registration'),
+        // backgroundColor: primaryColor, // Set app bar background color
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -49,24 +49,49 @@ class RegistrationScreen extends StatelessWidget {
               decoration: InputDecoration(labelText: 'Role'),
             ),
             SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () async {
-                final user = User(
-                  firstName: firstNameController.text,
-                  lastName: lastNameController.text,
-                  email: emailController.text,
-                  phone: phoneController.text,
-                  password: passwordController.text,
-                  role: roleController.text,
-                );
-                final success = await AuthService.registerUser(user);
-                if (success) {
-                  // Registration successful, navigate to next screen
-                } else {
-                  // Registration failed, show error message
-                }
+            SizedBox(
+              width: double.infinity, 
+              child: MaterialButton(
+                onPressed: () async {
+                  final user = User(
+                    firstName: firstNameController.text,
+                    lastName: lastNameController.text,
+                    email: emailController.text,
+                    phone: phoneController.text,
+                    password: passwordController.text,
+                    role: roleController.text,
+                  );
+                  final success = await AuthService.registerUser(user);
+                  if (success) {
+                    // Registration successful, navigate to next screen
+                  } else {
+                    // Registration failed, show error message
+                  }
+                },
+                color: primaryColor,
+                textColor: Colors.white,
+                child: Text('Register'),
+              ),
+            ),
+
+            SizedBox(height: 16),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                    context, '/login'); 
               },
-              child: Text('Register'),
+              child: RichText(
+                text: TextSpan(
+                  text: 'Already have an account? ',
+                  style: TextStyle(color: Colors.black),
+                  children: [
+                    TextSpan(
+                      text: 'Login here',
+                      style: TextStyle(color: primaryColor),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
