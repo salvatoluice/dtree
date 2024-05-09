@@ -7,8 +7,7 @@ import 'package:intl/intl.dart';
 class SingleDiscountScreen extends StatefulWidget {
   final String discountId;
 
-  const SingleDiscountScreen({Key? key, required this.discountId})
-      : super(key: key);
+  const SingleDiscountScreen({super.key, required this.discountId});
 
   @override
   _SingleDiscountScreenState createState() => _SingleDiscountScreenState();
@@ -34,7 +33,7 @@ class _SingleDiscountScreenState extends State<SingleDiscountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Discount Details'),
+        title: const Text('Discount Details'),
       ),
       body: RefreshIndicator(
         onRefresh: _refreshDiscountData,
@@ -42,7 +41,7 @@ class _SingleDiscountScreenState extends State<SingleDiscountScreen> {
           future: _discountDataFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             } else if (snapshot.hasError) {
@@ -90,7 +89,7 @@ class _SingleDiscountScreenState extends State<SingleDiscountScreen> {
                             Text(
                               discountData['name'],
                               style: const TextStyle(
-                                fontSize: 28,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -98,7 +97,7 @@ class _SingleDiscountScreenState extends State<SingleDiscountScreen> {
                               '$formattedPercentageDiscount% OFF',
                               style: const TextStyle(
                                 color: primaryColor,
-                                fontSize: 20,
+                                fontSize: 17,
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
@@ -108,7 +107,7 @@ class _SingleDiscountScreenState extends State<SingleDiscountScreen> {
                                 const Text(
                                   'was ',
                                   style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.normal),
                                 ),
                                 Text(
@@ -116,7 +115,7 @@ class _SingleDiscountScreenState extends State<SingleDiscountScreen> {
                                   style: const TextStyle(
                                       decoration: TextDecoration.lineThrough,
                                       fontWeight: FontWeight.normal,
-                                      fontSize: 20),
+                                      fontSize: 18),
                                 ),
                               ],
                             ),
@@ -126,14 +125,14 @@ class _SingleDiscountScreenState extends State<SingleDiscountScreen> {
                                   'now ',
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
-                                    fontSize: 18,
+                                    fontSize: 16,
                                   ),
                                 ),
                                 Text(
                                   'Ksh $priceAfterDiscount',
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 24,
+                                    fontSize: 20,
                                   ),
                                 ),
                               ],
@@ -145,14 +144,14 @@ class _SingleDiscountScreenState extends State<SingleDiscountScreen> {
                                   'Save ',
                                   style: TextStyle(
                                       color: thirdColor,
-                                      fontSize: 18,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.normal),
                                 ),
                                 Text(
                                   'Ksh $discount',
                                   style: const TextStyle(
                                       color: thirdColor,
-                                      fontSize: 20,
+                                      fontSize: 17,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -172,7 +171,7 @@ class _SingleDiscountScreenState extends State<SingleDiscountScreen> {
                                 'Get This Discount',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 20,
+                                  fontSize: 17,
                                 ),
                               ),
                             ),
@@ -226,28 +225,28 @@ class _SingleDiscountScreenState extends State<SingleDiscountScreen> {
                                   onPressed: () {
                                     // Implement Facebook share functionality
                                   },
-                                  icon: Icon(Icons.facebook),
+                                  icon: const Icon(Icons.facebook),
                                   color: Colors.blue,
                                 ),
                                 IconButton(
                                   onPressed: () {
                                     // Implement Instagram share functionality
                                   },
-                                  icon: Icon(Icons.facebook),
+                                  icon: const Icon(Icons.facebook),
                                   color: Colors.pink,
                                 ),
                                 IconButton(
                                   onPressed: () {
                                     // Implement Twitter share functionality
                                   },
-                                  icon: Icon(Icons.share),
+                                  icon: const Icon(Icons.share),
                                   color: Colors.lightBlue,
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    // Implement WhatsApp share functionality
+                                    // 
                                   },
-                                  icon: Icon(Icons.share),
+                                  icon: const Icon(Icons.share),
                                   color: Colors.green,
                                 ),
                               ],

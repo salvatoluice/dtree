@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:dtree/main.dart';
+import 'package:dtree/screens/single_store_screen.dart';
 
 class StoreCard extends StatelessWidget {
+  final String id; 
   final String name;
   final String storeType;
   final String imageUrl;
@@ -9,6 +11,7 @@ class StoreCard extends StatelessWidget {
 
   const StoreCard({
     Key? key,
+    required this.id, 
     required this.name,
     required this.storeType,
     required this.imageUrl,
@@ -18,8 +21,8 @@ class StoreCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      padding: EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -28,7 +31,7 @@ class StoreCard extends StatelessWidget {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 3,
-            offset: Offset(0, 3), 
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -47,39 +50,43 @@ class StoreCard extends StatelessWidget {
               width: 60,
               height: 60,
               color: Colors.grey[200],
-              child: Icon(Icons.store, color: Colors.grey),
+              child: const Icon(Icons.store, color: Colors.grey),
             ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             name,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
-            maxLines: 1, 
-            overflow: TextOverflow.ellipsis, 
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(
             storeType,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.grey,
             ),
-            maxLines: 1, 
-            overflow: TextOverflow.ellipsis, 
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           ElevatedButton(
-            onPressed: onPressed,
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => SingleStoreScreen(
+                    storeId: id), 
+              ));
+            },
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(10), 
+                borderRadius: BorderRadius.circular(10),
               ),
-              minimumSize: Size(double.infinity, 36), 
-              backgroundColor: primaryColor, 
+              minimumSize: const Size(double.infinity, 36),
+              backgroundColor: primaryColor,
             ),
-            child: Text(
+            child: const Text(
               'View',
               style: TextStyle(color: Colors.white),
             ),

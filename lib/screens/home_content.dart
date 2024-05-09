@@ -8,22 +8,24 @@ import 'package:dtree/models/discount.dart';
 import 'package:dtree/services/discount_service.dart';
 
 class HomeContent extends StatelessWidget {
+  const HomeContent({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
         child: Container(
           color: Colors.grey[100],
-          padding: EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'd-tree',
                       style: TextStyle(
                         fontSize: 30,
@@ -33,15 +35,15 @@ class HomeContent extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Container(
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(25),
                           ),
-                          padding: EdgeInsets.all(1),
+                          padding: const EdgeInsets.all(1),
                           child: IconButton(
-                            icon: Icon(Icons.person),
+                            icon: const Icon(Icons.person),
                             color: Colors.black,
                             onPressed: () {
                               // Open the drawer using the GlobalKey
@@ -55,25 +57,25 @@ class HomeContent extends StatelessWidget {
                 ),
               ),
               // Search bar
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
 
               // Search bar
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 16),
+                margin: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(25),
-                  border: Border.all(color: Color(0xFFE0E0E0)),
+                  border: Border.all(color: const Color(0xFFE0E0E0)),
                 ),
                 child: Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.search),
+                      icon: const Icon(Icons.search),
                       onPressed: () {
                         // Handle search icon onPressed event
                       },
                     ),
-                    Expanded(
+                    const Expanded(
                       child: TextField(
                         decoration: InputDecoration.collapsed(
                           hintText: 'Search',
@@ -87,7 +89,7 @@ class HomeContent extends StatelessWidget {
               // Categories Container
               CategoriesContainer(),
               // Header and "See all" text for stores
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -113,7 +115,7 @@ class HomeContent extends StatelessWidget {
               // Stores list
               StoresList(),
               // Header and "See all" text for discounts
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -148,13 +150,15 @@ class HomeContent extends StatelessWidget {
 
 
 class DiscountList extends StatelessWidget {
+  const DiscountList({super.key});
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Discount>>(
       future: DiscountService.fetchDiscounts(),
       builder: (context, AsyncSnapshot<List<Discount>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasError) {
@@ -170,7 +174,7 @@ class DiscountList extends StatelessWidget {
                 ListView.builder(
                   shrinkWrap: true,
                   physics:
-                      NeverScrollableScrollPhysics(), // Disable scrolling of inner ListView
+                      const NeverScrollableScrollPhysics(), // Disable scrolling of inner ListView
                   itemCount: discounts.length > 6 ? 6 : discounts.length,
                   itemBuilder: (context, index) {
                     return DiscountCard(
@@ -194,11 +198,13 @@ class DiscountList extends StatelessWidget {
 }
 
 class CategoriesContainer extends StatelessWidget {
+  const CategoriesContainer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-      padding: EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -249,7 +255,7 @@ class CategoryItem extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.all(12),
+          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: color,
             shape: BoxShape.circle,
@@ -260,7 +266,7 @@ class CategoryItem extends StatelessWidget {
             size: 30,
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text(label),
       ],
     );
@@ -268,13 +274,15 @@ class CategoryItem extends StatelessWidget {
 }
 
 class StoresList extends StatelessWidget {
+  const StoresList({super.key});
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Store>>(
       future: StoreService.fetchStores(),
       builder: (context, AsyncSnapshot<List<Store>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasError) {
@@ -285,8 +293,8 @@ class StoresList extends StatelessWidget {
           final List<Store> stores = snapshot.data!;
           return GridView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 0.1,
               mainAxisSpacing: 2,
@@ -295,9 +303,9 @@ class StoresList extends StatelessWidget {
             itemCount: stores.length >= 4 ? 4 : stores.length,
             itemBuilder: (context, index) {
               return StoreCard(
+                id: stores[index].id, // Pass the store ID
                 name: stores[index].name,
-                storeType: stores[index].storeType ??
-                    '', // Provide default value if storeType is null
+                storeType: stores[index].storeType ?? '',
                 imageUrl: stores[index].imageUrl,
                 onPressed: () {
                   // Handle onPressed event for this store
@@ -311,13 +319,14 @@ class StoresList extends StatelessWidget {
   }
 }
 
+
 @override
 Widget build(BuildContext context) {
   return FutureBuilder<List<Store>>(
     future: StoreService.fetchStores(),
     builder: (context, AsyncSnapshot<List<Store>> snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(),
         );
       } else if (snapshot.hasError) {
@@ -331,9 +340,9 @@ Widget build(BuildContext context) {
           itemCount: stores.length,
           itemBuilder: (context, index) {
             return StoreCard(
+              id: stores[index].id, // Pass the store ID
               name: stores[index].name,
-              storeType: stores[index].storeType ??
-                  '', // Provide default value if storeType is null
+              storeType: stores[index].storeType ?? '',
               imageUrl: stores[index].imageUrl,
               onPressed: () {
                 // Handle onPressed event for this store
@@ -345,3 +354,4 @@ Widget build(BuildContext context) {
     },
   );
 }
+
