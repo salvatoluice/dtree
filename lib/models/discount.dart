@@ -1,4 +1,5 @@
-import 'store.dart';
+import 'package:dtree/models/owner.dart';
+import 'package:dtree/models/store.dart'; // Import the Store class
 
 class Discount {
   final String id;
@@ -9,7 +10,7 @@ class Discount {
   final double percentageDiscount;
   final DateTime expiryDate;
   final String category;
-  // final Store store;
+  final Store store; // Include a reference to the Store class
   final String serviceTime;
   final String description;
   final String imageUrl;
@@ -23,26 +24,37 @@ class Discount {
     required this.percentageDiscount,
     required this.expiryDate,
     required this.category,
-    // required this.store,
+    required this.store, 
     required this.serviceTime,
     required this.description,
     required this.imageUrl,
   });
 
-  factory Discount.fromJson(Map<String, dynamic> json) {
+factory Discount.fromJson(Map<String, dynamic> json) {
     return Discount(
-      id: json['_id'],
-      name: json['name'],
-      initialPrice: json['initialPrice'],
-      discount: json['discount'],
-      priceAfterDiscount: json['priceAfterDiscount'],
-      percentageDiscount: json['percentageDiscount'].toDouble(),
-      expiryDate: DateTime.parse(json['expiryDate']),
-      category: json['category'],
-      // store: Store.fromJson(json['store']),
-      serviceTime: json['serviceTime'],
-      description: json['description'],
-      imageUrl: json['imageUrl'],
+      id: json['_id'] ?? '',
+      name: json['name'] ?? '',
+      initialPrice: json['initialPrice'] ?? 0,
+      discount: json['discount'] ?? 0,
+      priceAfterDiscount: json['priceAfterDiscount'] ?? 0,
+      percentageDiscount: (json['percentageDiscount'] ?? 0).toDouble(),
+      expiryDate: DateTime.tryParse(json['expiryDate'] ?? '') ?? DateTime.now(),
+      category: json['category'] ?? '',
+      store: json['store'] != null
+          ? Store.fromJson(json['store'])
+          : Store(
+              id: '',
+              name: '',
+              storeType: '',
+              location: '',
+              owner: Owner(
+                  id: '', firstName: '', lastName: '', email: '', phone: ''),
+              imageUrl: '',
+              followers: 0),
+      serviceTime: json['serviceTime'] ?? '',
+      description: json['description'] ?? '',
+      imageUrl: json['imageUrl'] ?? '',
     );
   }
+
 }

@@ -11,10 +11,10 @@ const Color fastColor = Color(0xFF1E2023);
 const Color thirdColor = Color(0xFFFF9021);
 
 void main() {
+  runApp(MyApp());
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: primaryColor,
   ));
-  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -44,8 +44,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      endDrawer: AppDrawer(
-          scaffoldKey: _scaffoldKey),
+      endDrawer: AppDrawer(scaffoldKey: _scaffoldKey),
       body: HomeScreen(),
     );
   }

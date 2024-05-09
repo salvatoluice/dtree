@@ -292,13 +292,12 @@ class StoresList extends StatelessWidget {
               mainAxisSpacing: 2,
               childAspectRatio: 0.8,
             ),
-            itemCount: stores.length >= 4
-                ? 4
-                : stores.length, 
+            itemCount: stores.length >= 4 ? 4 : stores.length,
             itemBuilder: (context, index) {
               return StoreCard(
                 name: stores[index].name,
-                storeType: stores[index].storeType,
+                storeType: stores[index].storeType ??
+                    '', // Provide default value if storeType is null
                 imageUrl: stores[index].imageUrl,
                 onPressed: () {
                   // Handle onPressed event for this store
@@ -312,36 +311,37 @@ class StoresList extends StatelessWidget {
   }
 }
 
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<List<Store>>(
-      future: StoreService.fetchStores(),
-      builder: (context, AsyncSnapshot<List<Store>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (snapshot.hasError) {
-          return Center(
-            child: Text('Error: ${snapshot.error}'),
-          );
-        } else {
-          final List<Store> stores = snapshot.data!;
-          return ListView.builder(
-            shrinkWrap: true,
-            itemCount: stores.length,
-            itemBuilder: (context, index) {
-              return StoreCard(
-                name: stores[index].name,
-                storeType: stores[index].storeType,
-                imageUrl: stores[index].imageUrl,
-                onPressed: () {
-                  // Handle onPressed event for this store
-                },
-              );
-            },
-          );
-        }
-      },
-    );
-  }
+@override
+Widget build(BuildContext context) {
+  return FutureBuilder<List<Store>>(
+    future: StoreService.fetchStores(),
+    builder: (context, AsyncSnapshot<List<Store>> snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      } else if (snapshot.hasError) {
+        return Center(
+          child: Text('Error: ${snapshot.error}'),
+        );
+      } else {
+        final List<Store> stores = snapshot.data!;
+        return ListView.builder(
+          shrinkWrap: true,
+          itemCount: stores.length,
+          itemBuilder: (context, index) {
+            return StoreCard(
+              name: stores[index].name,
+              storeType: stores[index].storeType ??
+                  '', // Provide default value if storeType is null
+              imageUrl: stores[index].imageUrl,
+              onPressed: () {
+                // Handle onPressed event for this store
+              },
+            );
+          },
+        );
+      }
+    },
+  );
+}

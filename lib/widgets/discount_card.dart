@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dtree/main.dart';
 import 'package:dtree/models/discount.dart';
+import 'package:dtree/screens/single_discount_screen.dart';
 import 'package:intl/intl.dart';
 
 class DiscountCard extends StatelessWidget {
@@ -38,7 +39,7 @@ class DiscountCard extends StatelessWidget {
           if (discount.imageUrl != null)
             Image.network(
               discount.imageUrl!,
-              width: double.infinity, 
+              width: double.infinity,
               height: 200,
               fit: BoxFit.cover,
             )
@@ -91,26 +92,30 @@ class DiscountCard extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-
           SizedBox(height: 12),
           Row(
             children: [
               ElevatedButton(
-                onPressed: onSeeDetailsPressed,
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => SingleDiscountScreen(
+                        discountId: discount
+                            .id), 
+                  ));
+                },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
-                    side: BorderSide(color: thirdColor), 
+                    side: BorderSide(color: thirdColor),
                   ),
                   minimumSize: Size(120, 36),
-                  backgroundColor: Colors.white
+                  backgroundColor: Colors.white,
                 ),
                 child: Text(
                   'See Details',
                   style: TextStyle(color: thirdColor),
                 ),
               ),
-
               SizedBox(width: 8),
               ElevatedButton(
                 onPressed: onGetDiscountPressed,
