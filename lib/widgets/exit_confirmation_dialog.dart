@@ -21,20 +21,20 @@ class ExitConfirmationDialog extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
-                    side: BorderSide(color: primaryColor),
+                    side: const BorderSide(color: primaryColor),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    minimumSize: Size(double.infinity, 40.0),
+                    minimumSize: const Size(double.infinity, 40.0),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Cancel',
                     style: TextStyle(color: primaryColor),
                   ),
                 ),
               ),
             ),
-            SizedBox(width: 8.0), 
+            const SizedBox(width: 8.0), 
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -47,9 +47,9 @@ class ExitConfirmationDialog extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    minimumSize: Size(double.infinity, 40.0),
+                    minimumSize: const Size(double.infinity, 40.0),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Exit',
                     style: TextStyle(color: Colors.white),
                   ),
