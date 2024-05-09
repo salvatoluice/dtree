@@ -86,16 +86,16 @@ class HomeContent extends StatelessWidget {
                   ],
                 ),
               ),
+
               // Categories Container
-              CategoriesContainer(),
-              // Header and "See all" text for stores
+              const CategoriesContainer(),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Top stores | 2024', // Header text
+                      'Top stores | 2024',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -113,7 +113,7 @@ class HomeContent extends StatelessWidget {
                 ),
               ),
               // Stores list
-              StoresList(),
+              const StoresList(),
               // Header and "See all" text for discounts
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -139,7 +139,7 @@ class HomeContent extends StatelessWidget {
                 ),
               ),
               // Discounts list
-              DiscountList(),
+              const DiscountList(),
             ],
           ),
         ),
@@ -305,7 +305,7 @@ class StoresList extends StatelessWidget {
               return StoreCard(
                 id: stores[index].id, // Pass the store ID
                 name: stores[index].name,
-                storeType: stores[index].storeType ?? '',
+                storeType: stores[index].storeType,
                 imageUrl: stores[index].imageUrl,
                 onPressed: () {
                   // Handle onPressed event for this store
@@ -342,7 +342,7 @@ Widget build(BuildContext context) {
             return StoreCard(
               id: stores[index].id, // Pass the store ID
               name: stores[index].name,
-              storeType: stores[index].storeType ?? '',
+              storeType: stores[index].storeType,
               imageUrl: stores[index].imageUrl,
               onPressed: () {
                 // Handle onPressed event for this store

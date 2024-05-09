@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:dtree/main.dart';
 import 'package:dtree/screens/home_content.dart';
+import 'package:dtree/screens/store_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -10,18 +13,19 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  List<Widget> _screens = [
-    HomeContent(),
-    Placeholder(),
-    Placeholder(),
-    Placeholder(),
+  final List<Widget> _screens = [
+    const HomeContent(),
+    const Placeholder(),
+    const StoreScreen(), // Add StoreScreen here
+    const Placeholder(),
   ];
 
-  List<BottomNavigationBarItem> _bottomNavBarItems = [
-    BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-    BottomNavigationBarItem(icon: Icon(Icons.local_offer), label: 'Deals'),
-    BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Stores'),
-    BottomNavigationBarItem(icon: Icon(Icons.more_horiz), label: 'More'),
+  final List<BottomNavigationBarItem> _bottomNavBarItems = [
+    const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+    const BottomNavigationBarItem(
+        icon: Icon(Icons.local_offer), label: 'Deals'),
+    const BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Stores'),
+    const BottomNavigationBarItem(icon: Icon(Icons.more_horiz), label: 'More'),
   ];
 
   void _onBottomNavItemTapped(int index) {
@@ -33,15 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverToBoxAdapter(
-            child: SingleChildScrollView(
-              child: _screens[_selectedIndex],
-            ),
-          ),
-        ],
-      ),
+      body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: _bottomNavBarItems,
         currentIndex: _selectedIndex,

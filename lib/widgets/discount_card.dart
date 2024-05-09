@@ -1,11 +1,13 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
 import '../../main.dart';
 import '../../models/discount.dart';
 import '../../screens/single_discount_screen.dart';
+import '../../screens/checkout_screen.dart';
 
 class DiscountCard extends StatelessWidget {
   final Discount discount;
@@ -116,7 +118,11 @@ class DiscountCard extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               ElevatedButton(
-                onPressed: onGetDiscountPressed,
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => CheckoutScreen(),
+                  ));
+                },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),

@@ -12,7 +12,7 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          Container(
+          const SizedBox(
             height: 80,
             child: DrawerHeader(
               decoration: BoxDecoration(
@@ -28,19 +28,19 @@ class AppDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text('Home'),
+            title: const Text('Home'),
             onTap: () {
               Navigator.pushReplacementNamed(context, '/home');
             },
           ),
           ListTile(
-            title: Text('Register'),
+            title: const Text('Register'),
             onTap: () {
               Navigator.pushReplacementNamed(context, '/register');
             },
           ),
           ListTile(
-            title: Text('Login'),
+            title: const Text('Login'),
             onTap: () {
               Navigator.pushReplacementNamed(context, '/login');
             },

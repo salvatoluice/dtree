@@ -4,6 +4,7 @@ import 'package:dtree/screens/home_screen.dart';
 import 'package:dtree/screens/login_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:dtree/widgets/app_drawer.dart';
+import 'package:dtree/widgets/exit_confirmation_dialog.dart';
 
 const Color primaryColor = Color(0xFFD83A3E);
 const Color secondaryColor = Color(0xFFFDEDEE);
@@ -12,7 +13,7 @@ const Color thirdColor = Color(0xFFFF9021);
 
 void main() {
   runApp(MyApp());
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: primaryColor,
   ));
 }
@@ -42,10 +43,23 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      endDrawer: AppDrawer(scaffoldKey: _scaffoldKey),
-      body: HomeScreen(),
+    return WillPopScope(
+      // Use WillPopScope to handle back button press
+      onWillPop: () async {
+        // Show the ExitConfirmationDialog when back button is pressed
+        bool exitConfirmed = await showDialog(
+          context: context,
+          builder: (context) => ExitConfirmationDialog(),
+        );
+
+        return exitConfirmed ??
+            false; 
+      },
+      child: Scaffold(
+        key: _scaffoldKey,
+        endDrawer: AppDrawer(scaffoldKey: _scaffoldKey),
+        body: HomeScreen(),
+      ),
     );
   }
 }

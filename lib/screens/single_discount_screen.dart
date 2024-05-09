@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dtree/services/single_discount_service.dart';
 import 'package:dtree/main.dart';
-
+import '../../screens/checkout_screen.dart';
 import 'package:intl/intl.dart';
 
 class SingleDiscountScreen extends StatefulWidget {
@@ -157,7 +157,11 @@ class _SingleDiscountScreenState extends State<SingleDiscountScreen> {
                               ],
                             ),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => CheckoutScreen(),
+                                ));
+                              },
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8.0),
