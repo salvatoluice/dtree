@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dtree/screens/registration_screen.dart';
 import 'package:dtree/screens/home_screen.dart';
 import 'package:dtree/screens/login_screen.dart';
+import 'package:dtree/screens/chat_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:dtree/widgets/app_drawer.dart';
 import 'package:dtree/widgets/exit_confirmation_dialog.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Montserrat',
       ),
-      home: MainScreen(),
+      home: ChatScreen(),
       debugShowCheckedModeBanner: false,
       routes: {
         '/home': (context) => HomeScreen(),
