@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Montserrat',
       ),
-      home: ChatScreen(),
+      home: MainScreen(),
       debugShowCheckedModeBanner: false,
       routes: {
         '/home': (context) => HomeScreen(),
@@ -53,8 +53,7 @@ class MainScreen extends StatelessWidget {
           builder: (context) => ExitConfirmationDialog(),
         );
 
-        return exitConfirmed ??
-            false; 
+        return exitConfirmed; 
       },
       child: Scaffold(
         key: _scaffoldKey,

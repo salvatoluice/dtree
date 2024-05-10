@@ -1,3 +1,4 @@
+import 'package:dtree/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dtree/main.dart';
 import 'package:dtree/models/store.dart';
@@ -46,8 +47,11 @@ class HomeContent extends StatelessWidget {
                             icon: const Icon(Icons.person),
                             color: Colors.black,
                             onPressed: () {
-                              // Open the drawer using the GlobalKey
-                              Scaffold.of(context).openEndDrawer();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProfileScreen()),
+                              );
                             },
                           ),
                         ),
