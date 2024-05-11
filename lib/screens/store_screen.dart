@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dtree/models/store.dart';
+import 'package:dtree/widgets/store_card_skeleton.dart';
 import 'package:dtree/services/store_service.dart';
 import 'package:dtree/widgets/store_card.dart';
 
@@ -73,8 +74,19 @@ class StoresList extends StatelessWidget {
       future: StoreService.fetchStores(),
       builder: (context, AsyncSnapshot<List<Store>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
+            return GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 1,
+              mainAxisSpacing: 1,
+              childAspectRatio: 0.8,
+            ),
+            itemCount: 6,
+            itemBuilder: (context, index) {
+              return StoreCardSkeleton();
+            },
           );
         } else if (snapshot.hasError) {
           return Center(

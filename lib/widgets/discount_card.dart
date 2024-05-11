@@ -49,7 +49,7 @@ class DiscountCard extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            discount.name ?? '',
+            discount.name,
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -120,7 +120,7 @@ class DiscountCard extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => CheckoutScreen(),
+                    builder: (context) => const CheckoutScreen(),
                   ));
                 },
                 style: ElevatedButton.styleFrom(

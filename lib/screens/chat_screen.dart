@@ -23,14 +23,13 @@ class ChatScreen extends StatelessWidget {
         ),
         leading: IconButton(
           onPressed: () {
-            // Handle back button press
+            Navigator.of(context).pop();
           },
           icon: const Icon(Icons.arrow_back),
         ),
         actions: [
           PopupMenuButton<String>(
-            offset: const Offset(0,
-                60), // Adjust offset to position the popup menu below the app bar
+            offset: const Offset(0, 60),
             onSelected: (value) {
               // Handle menu item selection
             },

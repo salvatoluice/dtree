@@ -1,3 +1,4 @@
+import 'package:dtree/screens/more_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dtree/main.dart';
 import 'package:dtree/screens/home_content.dart';
@@ -16,8 +17,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _screens = [
     const HomeContent(),
     const Placeholder(),
-    const StoreScreen(), // Add StoreScreen here
-    const Placeholder(),
+    const StoreScreen(), 
+    const MoreScreen(),
   ];
 
   final List<BottomNavigationBarItem> _bottomNavBarItems = [

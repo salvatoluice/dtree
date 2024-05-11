@@ -4,154 +4,167 @@ import 'package:dtree/main.dart';
 import 'package:dtree/models/store.dart';
 import 'package:dtree/services/store_service.dart';
 import 'package:dtree/widgets/store_card.dart';
+import 'package:dtree/widgets/store_card_skeleton.dart';
+import 'package:dtree/widgets/discount_card_skeleton.dart';
 import 'package:dtree/widgets/discount_card.dart';
 import 'package:dtree/models/discount.dart';
 import 'package:dtree/services/discount_service.dart';
 
-class HomeContent extends StatelessWidget {
-  const HomeContent({super.key});
+class HomeContent extends StatefulWidget {
+  const HomeContent({Key? key}) : super(key: key);
+
+  @override
+  _HomeContentState createState() => _HomeContentState();
+}
+
+class _HomeContentState extends State<HomeContent> {
+  Future<void> _refreshData() async {
+    // Implement logic to refresh data here
+    // For example:
+    // await StoreService.fetchStores();
+    // await DiscountService.fetchDiscounts();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Container(
-          color: Colors.grey[100],
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'd-tree',
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: primaryColor,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        const SizedBox(width: 8),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          padding: const EdgeInsets.all(1),
-                          child: IconButton(
-                            icon: const Icon(Icons.person),
-                            color: Colors.black,
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ProfileScreen()),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              // Search bar
-              const SizedBox(width: 8),
-
-              // Search bar
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(25),
-                  border: Border.all(color: const Color(0xFFE0E0E0)),
-                ),
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.search),
-                      onPressed: () {
-                        // Handle search icon onPressed event
-                      },
-                    ),
-                    const Expanded(
-                      child: TextField(
-                        decoration: InputDecoration.collapsed(
-                          hintText: 'Search',
-                          hintStyle: TextStyle(color: Colors.grey),
+      child: RefreshIndicator(
+        onRefresh: _refreshData,
+        child: SingleChildScrollView(
+          child: Container(
+            color: Colors.grey[100],
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'd-tree',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor,
                         ),
                       ),
-                    ),
-                  ],
+                      Row(
+                        children: [
+                          const SizedBox(width: 8),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            padding: const EdgeInsets.all(1),
+                            child: IconButton(
+                              icon: const Icon(Icons.person),
+                              color: Colors.black,
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ProfileScreen()),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-
-              // Categories Container
-              const CategoriesContainer(),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Top stores | 2024',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                const SizedBox(width: 8),
+                // Search bar
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(25),
+                    border: Border.all(color: const Color(0xFFE0E0E0)),
+                  ),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.search),
+                        onPressed: () {
+                          // Handle search icon onPressed event
+                        },
                       ),
-                    ),
-                    Text(
-                      'See all',
-                      style: TextStyle(
-                        color: primaryColor,
-                        fontWeight: FontWeight.bold,
+                      const Expanded(
+                        child: TextField(
+                          decoration: InputDecoration.collapsed(
+                            hintText: 'Search',
+                            hintStyle: TextStyle(color: Colors.grey),
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              // Stores list
-              const StoresList(),
-              // Header and "See all" text for discounts
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Top discounts | 2024', // Header text
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                // Your existing content here...
+                // Categories Container
+                const CategoriesContainer(),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Top stores | 2024',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'See all',
-                      style: TextStyle(
-                        color: primaryColor,
-                        fontWeight: FontWeight.bold,
+                      Text(
+                        'See all',
+                        style: TextStyle(
+                          color: primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              // Discounts list
-              const DiscountList(),
-            ],
+                // Stores list
+                const StoresList(),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Top discounts | 2024',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        'See all',
+                        style: TextStyle(
+                          color: primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const DiscountList(),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
-
 
 class DiscountList extends StatelessWidget {
   const DiscountList({super.key});
@@ -162,8 +175,12 @@ class DiscountList extends StatelessWidget {
       future: DiscountService.fetchDiscounts(),
       builder: (context, AsyncSnapshot<List<Discount>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: 4,
+            itemBuilder: (context, index) {
+              return const DiscountCardSkeleton();
+            },
           );
         } else if (snapshot.hasError) {
           return Center(
@@ -178,7 +195,7 @@ class DiscountList extends StatelessWidget {
                 ListView.builder(
                   shrinkWrap: true,
                   physics:
-                      const NeverScrollableScrollPhysics(), // Disable scrolling of inner ListView
+                      const NeverScrollableScrollPhysics(), 
                   itemCount: discounts.length > 6 ? 6 : discounts.length,
                   itemBuilder: (context, index) {
                     return DiscountCard(
@@ -286,8 +303,19 @@ class StoresList extends StatelessWidget {
       future: StoreService.fetchStores(),
       builder: (context, AsyncSnapshot<List<Store>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 1,
+              mainAxisSpacing: 1,
+              childAspectRatio: 0.8,
+            ),
+            itemCount: 4,
+            itemBuilder: (context, index) {
+              return StoreCardSkeleton();
+            },
           );
         } else if (snapshot.hasError) {
           return Center(
@@ -323,15 +351,18 @@ class StoresList extends StatelessWidget {
   }
 }
 
-
 @override
 Widget build(BuildContext context) {
   return FutureBuilder<List<Store>>(
     future: StoreService.fetchStores(),
     builder: (context, AsyncSnapshot<List<Store>> snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return const Center(
-          child: CircularProgressIndicator(),
+        return ListView.builder(
+          shrinkWrap: true,
+          itemCount: 4, 
+          itemBuilder: (context, index) {
+            return const DiscountCardSkeleton(); 
+          },
         );
       } else if (snapshot.hasError) {
         return Center(
@@ -358,4 +389,3 @@ Widget build(BuildContext context) {
     },
   );
 }
-
