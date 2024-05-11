@@ -12,13 +12,13 @@ class MoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('More'),
+        title: const Text('Access Everything'),
       ),
       body: DefaultTabController(
         length: 4,
         child: Column(
           children: [
-            TabBar(
+            const TabBar(
               indicatorColor: primaryColor,
               labelColor: primaryColor,
               unselectedLabelColor: Colors.grey,

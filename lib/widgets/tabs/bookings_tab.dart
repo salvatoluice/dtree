@@ -5,24 +5,95 @@ import 'package:dtree/models/booking.dart';
 class BookingsTab extends StatelessWidget {
   BookingsTab({Key? key}) : super(key: key);
 
-  final List<Booking> bookings = [
+ final List<Booking> bookings = [
     Booking(
-      discountName: '50% Off on Shoes',
-      storeName: 'Shoe Emporium',
+      discountName: '20% Off on Spa Services',
+      storeName: 'Relaxation Spa',
       time: '10:00 AM, May 15',
-      initialPrice: 100.0,
-      discount: 50,
-      priceAfterDiscount: 50.0,
+      initialPrice: 80.0,
+      discount: 20,
+      priceAfterDiscount: 64.0,
     ),
     Booking(
-      discountName: '30% Off on Electronics',
-      storeName: 'Tech Mart',
+      discountName: 'Free Haircut with Color Treatment',
+      storeName: 'Glamour Hair Salon',
       time: '11:30 AM, May 16',
+      initialPrice: 150.0,
+      discount: 100, // Free haircut, so discount is 100%
+      priceAfterDiscount: 0.0, // Price becomes 0 after discount
+    ),
+    Booking(
+      discountName: '50% Off on Full Makeup Session',
+      storeName: 'Beauty Makeup Studio',
+      time: '9:00 AM, May 17',
+      initialPrice: 80.0,
+      discount: 50,
+      priceAfterDiscount: 40.0,
+    ),
+    Booking(
+      discountName: '10% Off on Car Repair Services',
+      storeName: 'AutoFix Garage',
+      time: '2:00 PM, May 18',
       initialPrice: 200.0,
-      discount: 30,
-      priceAfterDiscount: 140.0,
+      discount: 10,
+      priceAfterDiscount: 180.0,
+    ),
+    Booking(
+      discountName: 'Special Discount on House Cleaning',
+      storeName: 'CleanPro Services',
+      time: '12:00 PM, May 19',
+      initialPrice: 120.0,
+      discount: 25,
+      priceAfterDiscount: 90.0,
+    ),
+    Booking(
+      discountName: '20% Off on Pet Grooming',
+      storeName: 'Paws & Claws Pet Spa',
+      time: '3:30 PM, May 20',
+      initialPrice: 60.0,
+      discount: 20,
+      priceAfterDiscount: 48.0,
+    ),
+    Booking(
+      discountName: '15% Off on Photography Session',
+      storeName: 'Capture Moments Photography',
+      time: '10:00 AM, May 21',
+      initialPrice: 180.0,
+      discount: 15,
+      priceAfterDiscount: 153.0,
+    ),
+    Booking(
+      discountName: 'Special Discount on Lawn Care Services',
+      storeName: 'GreenThumb Landscapes',
+      time: '8:00 AM, May 22',
+      initialPrice: 90.0,
+      discount: 40,
+      priceAfterDiscount: 54.0,
+    ),
+    Booking(
+      discountName: 'Free Fitness Class for New Members',
+      storeName: 'FitZone Gym',
+      time: '6:00 PM, May 23',
+      initialPrice: 0.0, // Free class, so initial price is 0
+      discount: 100, // Free class, so discount is 100%
+      priceAfterDiscount: 0.0, // Price becomes 0 after discount
+    ),
+    Booking(
+      discountName: '20% Off on Tutoring Services',
+      storeName: 'SmartKids Learning Center',
+      time: '4:00 PM, May 24',
+      initialPrice: 200.0,
+      discount: 20,
+      priceAfterDiscount: 160.0,
     ),
   ];
+
+  String _truncateWithEllipsis(String text, int maxLength) {
+    return (text.length <= maxLength)
+        ? text
+        : '${text.substring(0, maxLength)}...';
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +139,10 @@ class BookingsTab extends StatelessWidget {
                     'Discount',
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
-                  Text(booking.discountName),
+                  Text(
+                    _truncateWithEllipsis(booking.discountName,
+                        20),
+                  ),
                 ],
               ),
               const SizedBox(height: 12),
@@ -129,7 +203,6 @@ class BookingsTab extends StatelessWidget {
               const SizedBox(height: 16),
               TextButton(
                 onPressed: () {
-                  // Handle reschedule booking
                 },
                 style: ButtonStyle(
                   backgroundColor:
