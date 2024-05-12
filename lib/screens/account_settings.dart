@@ -1,3 +1,4 @@
+import 'package:dtree/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class AccountSettingsPage extends StatelessWidget {
@@ -16,7 +17,10 @@ class AccountSettingsPage extends StatelessWidget {
             title: const Text('Edit Profile'),
             leading: const Icon(Icons.edit),
             onTap: () {
-              // Navigate to edit profile page
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EditProfileScreen()),
+              );              
             },
           ),
           const Divider(),
@@ -24,7 +28,10 @@ class AccountSettingsPage extends StatelessWidget {
             title: const Text('Change Password'),
             leading: const Icon(Icons.lock),
             onTap: () {
-              // Navigate to change password page
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ChangePasswordScreen()),
+              );
             },
           ),
           const Divider(),

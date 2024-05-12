@@ -50,7 +50,6 @@ class ProfileScreen extends StatelessWidget {
               leading: const Icon(Icons.lock),
               title: const Text('Change Password'),
               onTap: () {
-                // Navigate to ChangePasswordScreen
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -62,7 +61,6 @@ class ProfileScreen extends StatelessWidget {
               leading: const Icon(Icons.edit),
               title: const Text('Edit Profile'),
               onTap: () {
-                // Navigate to EditProfileScreen
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => EditProfileScreen()),

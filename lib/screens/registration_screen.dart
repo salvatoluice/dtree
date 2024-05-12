@@ -1,5 +1,7 @@
+import 'package:dtree/providers/auth_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:dtree/models/user_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dtree/services/auth_service.dart';
 import 'package:dtree/main.dart';
 
@@ -15,8 +17,7 @@ class RegistrationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registration'),
-        // backgroundColor: primaryColor, // Set app bar background color
+        title: const Text('Registration'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -25,32 +26,32 @@ class RegistrationScreen extends StatelessWidget {
           children: [
             TextField(
               controller: firstNameController,
-              decoration: InputDecoration(labelText: 'First Name'),
+              decoration: const InputDecoration(labelText: 'First Name'),
             ),
             TextField(
               controller: lastNameController,
-              decoration: InputDecoration(labelText: 'Last Name'),
+              decoration: const InputDecoration(labelText: 'Last Name'),
             ),
             TextField(
               controller: emailController,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(labelText: 'Email'),
             ),
             TextField(
               controller: phoneController,
-              decoration: InputDecoration(labelText: 'Phone'),
+              decoration: const InputDecoration(labelText: 'Phone'),
             ),
             TextField(
               controller: passwordController,
               obscureText: true,
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration: const InputDecoration(labelText: 'Password'),
             ),
             TextField(
               controller: roleController,
-              decoration: InputDecoration(labelText: 'Role'),
+              decoration: const InputDecoration(labelText: 'Role'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             SizedBox(
-              width: double.infinity, 
+              width: double.infinity,
               child: MaterialButton(
                 onPressed: () async {
                   final user = User(
@@ -61,7 +62,11 @@ class RegistrationScreen extends StatelessWidget {
                     password: passwordController.text,
                     role: roleController.text,
                   );
-                  final success = await AuthService.registerUser(user);
+
+                  // Obtain the token from context
+                  final token = context.read(tokenProvider);
+
+                  final success = await AuthService.registerUser(user, token as String);
                   if (success) {
                     // Registration successful, navigate to next screen
                   } else {
@@ -70,18 +75,16 @@ class RegistrationScreen extends StatelessWidget {
                 },
                 color: primaryColor,
                 textColor: Colors.white,
-                child: Text('Register'),
+                child: const Text('Register'),
               ),
             ),
-
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(
-                    context, '/login'); 
+                Navigator.pushNamed(context, '/login');
               },
               child: RichText(
-                text: TextSpan(
+                text: const TextSpan(
                   text: 'Already have an account? ',
                   style: TextStyle(color: Colors.black),
                   children: [

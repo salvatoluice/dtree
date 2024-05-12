@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dtree/main.dart';
 import 'package:dtree/services/auth_service.dart';
+// ignore: unused_import
+import 'package:dtree/models/user_model.dart';
+import 'package:dtree/providers/auth_providers.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -10,39 +14,28 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
-        // backgroundColor: primaryColor,
+        title: const Text('Login'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment:
-              MainAxisAlignment.center, // Center content vertically
-          crossAxisAlignment:
-              CrossAxisAlignment.stretch, // Stretch content horizontally
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
               controller: emailController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Email',
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                      color: primaryColor), // Line color when focused
-                ),
               ),
             ),
             TextField(
               controller: passwordController,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Password',
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                      color: primaryColor),
-                ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             MaterialButton(
               onPressed: () async {
                 final success = await AuthService.loginUser(
@@ -50,23 +43,28 @@ class LoginScreen extends StatelessWidget {
                   passwordController.text,
                 );
                 if (success) {
-                  // Login successful, navigate to next screen
+                  final user = context.read(userProvider);
+                  user.state = await AuthService.getUser(emailController.text);
+
+                  final token = context.read(tokenProvider);
+                  token.state = user.state?.token;
+
+                  Navigator.pushNamed(context, '/home');
                 } else {
-                  // Login failed, show error message
+                  // Show login failed message
                 }
               },
-              color: primaryColor, 
-              textColor: Colors.white, 
-              child: Text('Login'),
+              color: primaryColor,
+              textColor: Colors.white,
+              child: const Text('Login'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(
-                    context, '/register'); // Navigate to register screen
+                Navigator.pushNamed(context, '/register');
               },
               child: RichText(
-                text: TextSpan(
+                text: const TextSpan(
                   text: 'Don\'t have an account? ',
                   style: TextStyle(color: Colors.black),
                   children: [

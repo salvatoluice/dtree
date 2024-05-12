@@ -6,6 +6,7 @@ import 'package:dtree/screens/chat_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:dtree/widgets/app_drawer.dart';
 import 'package:dtree/widgets/exit_confirmation_dialog.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 const Color primaryColor = Color(0xFFD83A3E);
 const Color secondaryColor = Color(0xFFFDEDEE);
@@ -22,19 +23,22 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Dtree',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Montserrat',
+    return ProviderScope(
+      // Wrap MaterialApp with ProviderScope
+      child: MaterialApp(
+        title: 'Dtree',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          fontFamily: 'Montserrat',
+        ),
+        home: MainScreen(),
+        debugShowCheckedModeBanner: false,
+        routes: {
+          '/home': (context) => HomeScreen(),
+          '/register': (context) => RegistrationScreen(),
+          '/login': (context) => LoginScreen(),
+        },
       ),
-      home: MainScreen(),
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/home': (context) => HomeScreen(),
-        '/register': (context) => RegistrationScreen(),
-        '/login': (context) => LoginScreen(),
-      },
     );
   }
 }
@@ -53,7 +57,7 @@ class MainScreen extends StatelessWidget {
           builder: (context) => ExitConfirmationDialog(),
         );
 
-        return exitConfirmed; 
+        return exitConfirmed;
       },
       child: Scaffold(
         key: _scaffoldKey,

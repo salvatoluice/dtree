@@ -13,7 +13,7 @@ class AboutUsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Welcome to Discoun3!',
+              'Welcome to d-tree!',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -29,7 +29,7 @@ class AboutUsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             const Text(
-              'Discoun3 is a leading online discount store that connects savvy shoppers with their preferred service outlets, be it restaurants, salons, fitness centers, entertainment venues, or any other service industry.',
+              'd-tree is a leading online discount store that connects savvy shoppers with their preferred service outlets, be it restaurants, salons, fitness centers, entertainment venues, or any other service industry.',
             ),
             const SizedBox(height: 16),
             const Text(
@@ -101,11 +101,11 @@ class AboutUsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             const Text(
-              'At Discoun3, we believe in the power of great experiences and smart savings. Join our vibrant community and embrace a world of discounts, seamless bookings, and thriving businesses.',
+              'At d-tree, we believe in the power of great experiences and smart savings. Join our vibrant community and embrace a world of discounts, seamless bookings, and thriving businesses.',
             ),
             const SizedBox(height: 16),
             const Text(
-              'Thank you for choosing Discoun3 – where incredible discounts meet exceptional services!',
+              'Thank you for choosing d-tree – where incredible discounts meet exceptional services!',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
