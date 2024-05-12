@@ -1,14 +1,63 @@
+import 'package:dtree/providers/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:dtree/services/login_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dtree/main.dart';
-import 'package:dtree/services/auth_service.dart';
-// ignore: unused_import
-import 'package:dtree/models/user_model.dart';
-import 'package:dtree/providers/auth_providers.dart';
 
-class LoginScreen extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  bool _isLoading = false;
+
+  Future<void> _login() async {
+    final email = emailController.text;
+    final password = passwordController.text;
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    final userData = await LoginService.login(email, password);
+
+    if (userData != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Login successful!'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+
+      context.read(userDataProvider).state = UserData(
+        email: userData['email'],
+        firstName: userData['firstName'],
+        lastName: userData['lastName'],
+        phone: userData['phone'],
+        role: userData['role'],
+        token: userData['token'],
+      );
+
+      Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Login failed. Please check your credentials.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +69,6 @@ class LoginScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
               controller: emailController,
@@ -28,6 +76,7 @@ class LoginScreen extends StatelessWidget {
                 labelText: 'Email',
               ),
             ),
+            const SizedBox(height: 10),
             TextField(
               controller: passwordController,
               obscureText: true,
@@ -35,46 +84,19 @@ class LoginScreen extends StatelessWidget {
                 labelText: 'Password',
               ),
             ),
-            const SizedBox(height: 16),
-            MaterialButton(
-              onPressed: () async {
-                final success = await AuthService.loginUser(
-                  emailController.text,
-                  passwordController.text,
-                );
-                if (success) {
-                  final user = context.read(userProvider);
-                  user.state = await AuthService.getUser(emailController.text);
-
-                  final token = context.read(tokenProvider);
-                  token.state = user.state?.token;
-
-                  Navigator.pushNamed(context, '/home');
-                } else {
-                  // Show login failed message
-                }
-              },
-              color: primaryColor,
-              textColor: Colors.white,
-              child: const Text('Login'),
-            ),
-            const SizedBox(height: 16),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/register');
-              },
-              child: RichText(
-                text: const TextSpan(
-                  text: 'Don\'t have an account? ',
-                  style: TextStyle(color: Colors.black),
-                  children: [
-                    TextSpan(
-                      text: 'Register here',
-                      style: TextStyle(color: primaryColor),
-                    ),
-                  ],
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _isLoading ? null : _login,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: primaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                minimumSize: const Size(double.infinity, 0),
               ),
+              child: Text(_isLoading ? 'Logging in...' : 'Login',
+                  style: const TextStyle(fontSize: 16, color: Colors.white)),
             ),
           ],
         ),

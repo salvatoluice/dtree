@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dtree/screens/registration_screen.dart';
 import 'package:dtree/screens/home_screen.dart';
 import 'package:dtree/screens/login_screen.dart';
+// ignore: unused_import
 import 'package:dtree/screens/chat_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:dtree/widgets/app_drawer.dart';
@@ -24,7 +25,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
-      // Wrap MaterialApp with ProviderScope
       child: MaterialApp(
         title: 'Dtree',
         theme: ThemeData(
@@ -49,9 +49,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      // Use WillPopScope to handle back button press
       onWillPop: () async {
-        // Show the ExitConfirmationDialog when back button is pressed
         bool exitConfirmed = await showDialog(
           context: context,
           builder: (context) => ExitConfirmationDialog(),

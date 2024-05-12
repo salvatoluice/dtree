@@ -12,9 +12,9 @@ class User {
     required this.lastName,
     required this.email,
     required this.phone,
-    required this.password,
+    this.password ='',
     required this.role,
-    this.token = '', // Make token optional with a default value
+    this.token = '',
   });
 
   factory User.fromJson(Map<String, dynamic> json) {

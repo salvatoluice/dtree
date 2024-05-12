@@ -1,3 +1,5 @@
+import 'package:dtree/providers/auth_providers.dart';
+import 'package:dtree/providers/providers.dart';
 import 'package:dtree/screens/settings_screen.dart';
 import 'package:dtree/widgets/image_corousel_widget.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:dtree/screens/profile_screen.dart';
 import 'package:dtree/models/store.dart';
 import 'package:dtree/services/store_service.dart';
 import 'package:dtree/widgets/store_card.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dtree/widgets/store_card_skeleton.dart';
 import 'package:dtree/widgets/discount_card_skeleton.dart';
 import 'package:dtree/widgets/discount_card.dart';
@@ -83,17 +86,27 @@ class _HomeContentState extends State<HomeContent> {
                             ),
                             padding: const EdgeInsets.all(1),
                             child: IconButton(
-                              padding: EdgeInsets.zero,
-                              icon: const Icon(Icons.person),
-                              color: Colors.black,
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ProfileScreen()),
-                                );
-                              },
-                            ),
+                                padding: EdgeInsets.zero,
+                                icon: const Icon(Icons.person),
+                                color: Colors.black,
+                                onPressed: () {
+                                  final user =
+                                      context.read(userDataProvider).state;
+                                  if (user != null) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ProfileScreen(),
+                                      ),
+                                    );
+                                  } else {
+                                    Navigator.pushReplacementNamed(
+                                      context,
+                                      '/login',
+                                    );
+                                  }
+                                },
+                              )
                           ),
                         ],
                       ),

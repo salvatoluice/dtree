@@ -1,9 +1,13 @@
+import 'package:dtree/providers/providers.dart';
 import 'package:flutter/material.dart';
-import 'package:dtree/main.dart'; // Assuming primaryColor is defined here
+import 'package:dtree/main.dart'; 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final user = context.read(userDataProvider).state;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
@@ -14,36 +18,33 @@ class ProfileScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
-            const Text(
-              'John Doe',
-              style: TextStyle(
+            Text(
+              '${user!.firstName} ${user.lastName}',
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 10),
             Text(
-              'john.doe@example.com',
-              style: TextStyle(
+              user.email,
+              style: const TextStyle(
                 fontSize: 16,
-                color: Colors.grey[600],
               ),
             ),
             const SizedBox(height: 20),
             ListTile(
               leading: const Icon(Icons.phone),
               title: const Text('Phone Number'),
-              subtitle: const Text('+1234567890'),
+              subtitle: Text(user.phone),
               onTap: () {
-                // Action to edit phone number
               },
             ),
             ListTile(
               leading: const Icon(Icons.email),
               title: const Text('Email Address'),
-              subtitle: const Text('john.doe@example.com'),
+              subtitle: Text(user.email),
               onTap: () {
-                // Action to edit email address
               },
             ),
             ListTile(
@@ -81,6 +82,7 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
+// Change Password Screen
 class ChangePasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -116,8 +118,9 @@ class ChangePasswordScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: primaryColor,
               ),
-              child: const Text('Change Password',
-              style: TextStyle(
+              child: const Text(
+                'Change Password',
+                style: TextStyle(
                   fontSize: 14,
                   color: Colors.white,
                 ),
@@ -130,6 +133,7 @@ class ChangePasswordScreen extends StatelessWidget {
   }
 }
 
+// Edit Profile Screen
 class EditProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -165,8 +169,9 @@ class EditProfileScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: primaryColor,
               ),
-              child: const Text('Save Changes',
-              style: TextStyle(
+              child: const Text(
+                'Save Changes',
+                style: TextStyle(
                   fontSize: 14,
                   color: Colors.white,
                 ),
