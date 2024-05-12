@@ -1,6 +1,7 @@
-import 'package:dtree/screens/profile_screen.dart';
+import 'package:dtree/widgets/image_corousel_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:dtree/main.dart';
+import 'package:dtree/screens/profile_screen.dart';
 import 'package:dtree/models/store.dart';
 import 'package:dtree/services/store_service.dart';
 import 'package:dtree/widgets/store_card.dart';
@@ -37,9 +38,10 @@ class _HomeContentState extends State<HomeContent> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const SizedBox(width: 8),
                 Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -80,7 +82,7 @@ class _HomeContentState extends State<HomeContent> {
                 const SizedBox(width: 8),
                 // Search bar
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(25),
@@ -104,6 +106,14 @@ class _HomeContentState extends State<HomeContent> {
                       ),
                     ],
                   ),
+                ),
+                // Image Carousel
+                const ImageCarouselWidget(
+                  imageUrls: [
+                    'https://fatcoupon.com/_next/image?url=https%3A%2F%2Fd3itvsmwj0r86k.cloudfront.net%2Fimages%2F1ef4b6d8-f46b-4465-8e1b-acaebd8d8c31.png&w=1920&q=75',
+                    'https://fatcoupon.com/_next/image?url=https%3A%2F%2Fd3itvsmwj0r86k.cloudfront.net%2Fimages%2F2c4aa157-ece8-41f7-ac3a-62b379157f98.webp&w=1920&q=75',
+                    'https://fatcoupon.com/_next/image?url=https%3A%2F%2Fd3itvsmwj0r86k.cloudfront.net%2Fimages%2F577dde1b-734a-4c1e-9489-410f5d17bae8.webp&w=1920&q=75',
+                  ],
                 ),
                 // Your existing content here...
                 // Categories Container
@@ -165,6 +175,7 @@ class _HomeContentState extends State<HomeContent> {
     );
   }
 }
+
 
 class DiscountList extends StatelessWidget {
   const DiscountList({super.key});
