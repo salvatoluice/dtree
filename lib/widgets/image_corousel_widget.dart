@@ -12,7 +12,7 @@ class ImageCarouselWidget extends StatefulWidget {
   const ImageCarouselWidget({
     Key? key,
     required this.imageUrls,
-    this.height = 150.0, 
+    this.height = 130.0, 
     this.autoplay = true,
     this.interval = 3000,
     this.activeDotColor = primaryColor, 
@@ -67,7 +67,6 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
             );
           }).toList(),
         ),
-        // Pagination dots
         Positioned(
           left: 0,
           right: 0,
