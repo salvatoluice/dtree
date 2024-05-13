@@ -1,13 +1,14 @@
-import 'package:dtree/providers/providers.dart';
+import 'package:dtree/main.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:dtree/main.dart'; 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProfileScreen extends StatelessWidget {
+  final Map<String, dynamic> userData;
+
+  const ProfileScreen({Key? key, required this.userData}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final user = context.read(userDataProvider).state;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
@@ -19,7 +20,7 @@ class ProfileScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 20),
             Text(
-              '${user!.firstName} ${user.lastName}',
+              '${userData['firstName']} ${userData['lastName']}',
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -27,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              user.email,
+              userData['email'],
               style: const TextStyle(
                 fontSize: 16,
               ),
@@ -36,16 +37,14 @@ class ProfileScreen extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.phone),
               title: const Text('Phone Number'),
-              subtitle: Text(user.phone),
-              onTap: () {
-              },
+              subtitle: Text(userData['phone']),
+              onTap: () {},
             ),
             ListTile(
               leading: const Icon(Icons.email),
               title: const Text('Email Address'),
-              subtitle: Text(user.email),
-              onTap: () {
-              },
+              subtitle: Text(userData['email']),
+              onTap: () {},
             ),
             ListTile(
               leading: const Icon(Icons.lock),
@@ -54,7 +53,8 @@ class ProfileScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ChangePasswordScreen()),
+                    builder: (context) => ChangePasswordScreen(),
+                  ),
                 );
               },
             ),
@@ -68,11 +68,11 @@ class ProfileScreen extends StatelessWidget {
                 );
               },
             ),
-            ListTile(
+           ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Logout'),
               onTap: () {
-                // Action to logout
+                _showLogoutConfirmationDialog(context);
               },
             ),
           ],
@@ -82,7 +82,6 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-// Change Password Screen
 class ChangePasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -113,7 +112,6 @@ class ChangePasswordScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Action to change password
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: primaryColor,
@@ -133,7 +131,6 @@ class ChangePasswordScreen extends StatelessWidget {
   }
 }
 
-// Edit Profile Screen
 class EditProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -164,7 +161,6 @@ class EditProfileScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Action to save profile changes
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: primaryColor,
@@ -184,8 +180,40 @@ class EditProfileScreen extends StatelessWidget {
   }
 }
 
+void _showLogoutConfirmationDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Logout'),
+        content: const Text('Are you sure you want to logout?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              _logout(context);
+            },
+            child: const Text('Logout'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+void _logout(BuildContext context) async {
+  final storage = FlutterSecureStorage();
+  await storage.delete(key: 'userData');
+  Navigator.pushReplacementNamed(context, '/home');
+}
+
 void main() {
   runApp(MaterialApp(
-    home: ProfileScreen(),
+    home: ProfileScreen(userData: {}),
   ));
 }

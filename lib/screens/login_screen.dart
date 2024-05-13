@@ -1,8 +1,10 @@
-import 'package:dtree/providers/providers.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:dtree/services/login_service.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dtree/main.dart';
+import 'package:dtree/services/login_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -35,13 +37,10 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
 
-      context.read(userDataProvider).state = UserData(
-        email: userData['email'],
-        firstName: userData['firstName'],
-        lastName: userData['lastName'],
-        phone: userData['phone'],
-        role: userData['role'],
-        token: userData['token'],
+      final storage = FlutterSecureStorage();
+      await storage.write(
+        key: 'userData',
+        value: jsonEncode(userData),
       );
 
       Navigator.pushReplacementNamed(context, '/home');

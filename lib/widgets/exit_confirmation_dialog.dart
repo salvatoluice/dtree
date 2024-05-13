@@ -40,7 +40,7 @@ class ExitConfirmationDialog extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pop(true); // Return true when exited
+                    Navigator.of(context).pop(true);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: primaryColor,

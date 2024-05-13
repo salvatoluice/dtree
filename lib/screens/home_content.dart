@@ -1,4 +1,4 @@
-import 'package:dtree/providers/auth_providers.dart';
+import 'dart:convert';
 import 'package:dtree/providers/providers.dart';
 import 'package:dtree/screens/settings_screen.dart';
 import 'package:dtree/widgets/image_corousel_widget.dart';
@@ -8,6 +8,7 @@ import 'package:dtree/screens/profile_screen.dart';
 import 'package:dtree/models/store.dart';
 import 'package:dtree/services/store_service.dart';
 import 'package:dtree/widgets/store_card.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dtree/widgets/store_card_skeleton.dart';
 import 'package:dtree/widgets/discount_card_skeleton.dart';
@@ -16,7 +17,9 @@ import 'package:dtree/models/discount.dart';
 import 'package:dtree/services/discount_service.dart';
 
 class HomeContent extends StatefulWidget {
-  const HomeContent({Key? key}) : super(key: key);
+  final Map<String, dynamic> userData;
+
+  const HomeContent({Key? key, required this.userData}) : super(key: key);
 
   @override
   _HomeContentState createState() => _HomeContentState();
@@ -27,7 +30,6 @@ class _HomeContentState extends State<HomeContent> {
     await StoreService.fetchStores();
     await DiscountService.fetchDiscounts();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +45,7 @@ class _HomeContentState extends State<HomeContent> {
               children: [
                 const SizedBox(width: 8),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -86,27 +87,31 @@ class _HomeContentState extends State<HomeContent> {
                             ),
                             padding: const EdgeInsets.all(1),
                             child: IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: const Icon(Icons.person),
-                                color: Colors.black,
-                                onPressed: () {
-                                  final user =
-                                      context.read(userDataProvider).state;
-                                  if (user != null) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ProfileScreen(),
-                                      ),
-                                    );
-                                  } else {
-                                    Navigator.pushReplacementNamed(
-                                      context,
-                                      '/login',
-                                    );
-                                  }
-                                },
-                              )
+                              padding: EdgeInsets.zero,
+                              icon: const Icon(Icons.person),
+                              color: Colors.black,
+                              onPressed: () async {
+                                final storage = FlutterSecureStorage();
+                                final userDataString =
+                                    await storage.read(key: 'userData');
+
+                                if (userDataString != null) {
+                                  final userData = jsonDecode(userDataString);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ProfileScreen(userData: userData),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    '/login',
+                                  );
+                                }
+                              },
+                            ),
                           ),
                         ],
                       ),
@@ -130,8 +135,7 @@ class _HomeContentState extends State<HomeContent> {
                           children: [
                             const Expanded(
                               child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: 16.0),
+                                padding: EdgeInsets.only(left: 16.0),
                                 child: TextField(
                                   decoration: InputDecoration.collapsed(
                                     hintText: 'Search on d-tree...',
@@ -222,7 +226,6 @@ class _HomeContentState extends State<HomeContent> {
     );
   }
 }
-
 
 class DiscountList extends StatelessWidget {
   const DiscountList({super.key});
