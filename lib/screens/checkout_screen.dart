@@ -1,3 +1,6 @@
+import 'package:dtree/widgets/receipt.dart';
+import 'package:dtree/widgets/results/failed.dart';
+import 'package:dtree/widgets/results/success.dart';
 import 'package:flutter/material.dart';
 import 'package:dtree/main.dart'; 
 
@@ -119,12 +122,34 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ],
               ),
             const SizedBox(height: 16),
-            ElevatedButton(
+           ElevatedButton(
               onPressed: () {
                 if (_selectedPaymentMethod == null) {
                   _showSnackbar('Please select a payment method');
                 } else {
                   print('Processing Payment...');
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PaymentSuccessScreen(),
+                    ),
+                  );
+
+                  Future.delayed(const Duration(seconds: 3), () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ReceiptPage(
+                          discountName: 'Awesome Discount',
+                          amountPaid: 100,
+                          payerName: 'John Doe',
+                          dateTime: DateTime.now(),
+                        ),
+                      ),
+                    );
+
+                  });
                 }
               },
               style: ElevatedButton.styleFrom(
@@ -142,6 +167,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ),
               ),
             ),
+
           ],
         ),
       ),
