@@ -1,3 +1,4 @@
+import 'package:dtree/screens/discount_screen.dart';
 import 'package:dtree/screens/more_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dtree/main.dart';
@@ -16,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _screens = [
     const HomeContent(userData: {},),
-    const Placeholder(),
+    DiscountScreen(),
     const StoreScreen(), 
     const MoreScreen(),
   ];

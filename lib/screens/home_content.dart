@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:dtree/providers/providers.dart';
 import 'package:dtree/screens/settings_screen.dart';
 import 'package:dtree/widgets/image_corousel_widget.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:dtree/models/store.dart';
 import 'package:dtree/services/store_service.dart';
 import 'package:dtree/widgets/store_card.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dtree/widgets/store_card_skeleton.dart';
 import 'package:dtree/widgets/discount_card_skeleton.dart';
 import 'package:dtree/widgets/discount_card.dart';
@@ -49,13 +47,9 @@ class _HomeContentState extends State<HomeContent> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'd-tree',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: primaryColor,
-                        ),
+                      Container(
+                        width: 150,
+                        child: Image.asset('assets/logo1.png'),
                       ),
                       Row(
                         children: [

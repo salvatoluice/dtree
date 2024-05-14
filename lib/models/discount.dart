@@ -10,7 +10,7 @@ class Discount {
   final double percentageDiscount;
   final DateTime expiryDate;
   final String category;
-  final Store store; // Include a reference to the Store class
+  final Store store;
   final String serviceTime;
   final String description;
   final String imageUrl;

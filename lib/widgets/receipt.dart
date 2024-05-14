@@ -30,7 +30,7 @@ class ReceiptPage extends StatelessWidget {
             _buildKeyValueRow('Discount Name:', discountName),
             _buildKeyValueRow(
               'Amount Paid:',
-              '\Ksh ${amountPaid.toStringAsFixed(2)}',
+              'Ksh ${amountPaid.toStringAsFixed(2)}',
               highlight: true,
             ),
             _buildKeyValueRow('Payer:', payerName),

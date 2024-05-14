@@ -14,19 +14,14 @@ class AuthService {
       final responseData = json.decode(response.body);
 
       if (responseData['success']) {
-        // Login successful
         final user = User.fromJson(responseData['user']);
         final token = responseData['token'] as String;
 
-        // Return true to indicate successful login
         return true;
       } else {
-        // Login failed
         return false;
       }
     } catch (error) {
-      // Handle error
-      print('Login failed: $error');
       return false;
     }
   }
