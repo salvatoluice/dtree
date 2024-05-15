@@ -47,10 +47,18 @@ class _HomeContentState extends State<HomeContent> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        width: 150,
-                        child: Image.asset('assets/logo1.png'),
+                      const Text(
+                        'digispace',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor,
+                        ),
                       ),
+                      // Container(
+                      //   width: 150,
+                      //   child: Image.asset('assets/logo1.png'),
+                      // ),
                       Row(
                         children: [
                           Container(

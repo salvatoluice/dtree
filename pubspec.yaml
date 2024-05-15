@@ -25,3 +25,5 @@ flutter:
   assets:
     - assets/logo1.png
   uses-material-design: true
+permissions:
+  internet:
