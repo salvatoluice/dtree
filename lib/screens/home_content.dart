@@ -37,28 +37,19 @@ class _HomeContentState extends State<HomeContent> {
         child: SingleChildScrollView(
           child: Container(
             color: Colors.grey[100],
-            padding: const EdgeInsets.symmetric(vertical: 16),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(width: 8),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'digispace',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: primaryColor,
-                        ),
+                      Container(
+                        width: 110,
+                        child: Image.asset('assets/logo1.png'),
                       ),
-                      // Container(
-                      //   width: 150,
-                      //   child: Image.asset('assets/logo1.png'),
-                      // ),
                       Row(
                         children: [
                           Container(
@@ -66,10 +57,10 @@ class _HomeContentState extends State<HomeContent> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(25),
                             ),
-                            padding: const EdgeInsets.all(1),
                             child: IconButton(
                               padding: EdgeInsets.zero,
-                              icon: const Icon(Icons.settings),
+                              icon: const Icon(Icons.settings,
+                                  size: 20), 
                               color: Colors.black,
                               onPressed: () {
                                 Navigator.push(
@@ -87,13 +78,13 @@ class _HomeContentState extends State<HomeContent> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(25),
                             ),
-                            padding: const EdgeInsets.all(1),
                             child: IconButton(
                               padding: EdgeInsets.zero,
-                              icon: const Icon(Icons.person),
+                              icon: const Icon(Icons.person,
+                                  size: 20),
                               color: Colors.black,
                               onPressed: () async {
-                                final storage = FlutterSecureStorage();
+                                const storage = FlutterSecureStorage();
                                 final userDataString =
                                     await storage.read(key: 'userData');
 
@@ -116,6 +107,7 @@ class _HomeContentState extends State<HomeContent> {
                             ),
                           ),
                         ],
+
                       ),
                     ],
                   ),
@@ -124,42 +116,32 @@ class _HomeContentState extends State<HomeContent> {
                 // Search bar
                 Container(
                   margin:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      const EdgeInsets.symmetric(vertical: 10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(25),
                     border: Border.all(color: const Color(0xFFE0E0E0)),
                   ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            const Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.only(left: 16.0),
-                                child: TextField(
-                                  decoration: InputDecoration.collapsed(
-                                    hintText: 'Search on d-tree...',
-                                    hintStyle: TextStyle(color: Colors.grey),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.search),
-                              onPressed: () {
-                                // Handle search icon onPressed event
-                              },
-                            ),
-                          ],
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Search on d-tree...',
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        border: InputBorder.none,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 14.0, horizontal: 20.0),
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.search, color: Colors.grey),
+                          onPressed: () {},
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
-
-                // Image Carousel
                 const ImageCarouselWidget(
                   imageUrls: [
                     'https://fatcoupon.com/_next/image?url=https%3A%2F%2Fd3itvsmwj0r86k.cloudfront.net%2Fimages%2F1ef4b6d8-f46b-4465-8e1b-acaebd8d8c31.png&w=1920&q=75',
@@ -168,11 +150,10 @@ class _HomeContentState extends State<HomeContent> {
                     'https://fatcoupon.com/_next/image?url=https%3A%2F%2Fd3itvsmwj0r86k.cloudfront.net%2Fimages%2F1f0cc785-d79d-4232-93db-016072562ded.webp&w=1920&q=75'
                   ],
                 ),
-                // Your existing content here...
-                // Categories Container
+                
                 const CategoriesContainer(),
                 const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  padding: EdgeInsets.symmetric(),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -197,7 +178,7 @@ class _HomeContentState extends State<HomeContent> {
                 // Stores list
                 const StoresList(),
                 const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  padding: EdgeInsets.symmetric(vertical: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -286,8 +267,8 @@ class CategoriesContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.symmetric(vertical : 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -338,11 +319,11 @@ class CategoryItem extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: color,
             shape: BoxShape.circle,
           ),
+          padding: const EdgeInsets.all(12),
           child: Icon(
             icon,
             color: Colors.black,
@@ -370,9 +351,9 @@ class StoresList extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              crossAxisSpacing: 1,
-              mainAxisSpacing: 1,
-              childAspectRatio: 0.8,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
+              childAspectRatio: 0.6,
             ),
             itemCount: 4,
             itemBuilder: (context, index) {
@@ -397,12 +378,12 @@ class StoresList extends StatelessWidget {
             itemCount: stores.length >= 4 ? 4 : stores.length,
             itemBuilder: (context, index) {
               return StoreCard(
-                id: stores[index].id, // Pass the store ID
+                id: stores[index].id,
                 name: stores[index].name,
                 storeType: stores[index].storeType,
                 imageUrl: stores[index].imageUrl,
                 onPressed: () {
-                  // Handle onPressed event for this store
+                 
                 },
               );
             },

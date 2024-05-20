@@ -1,99 +1,66 @@
+import 'dart:convert';
 import 'package:dtree/main.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:dtree/models/booking.dart';
 
-class BookingsTab extends StatelessWidget {
+class BookingsTab extends StatefulWidget {
   BookingsTab({Key? key}) : super(key: key);
 
- final List<Booking> bookings = [
-    Booking(
-      discountName: '20% Off on Spa Services',
-      storeName: 'Relaxation Spa',
-      time: '10:00 AM, May 15',
-      initialPrice: 80.0,
-      discount: 20,
-      priceAfterDiscount: 64.0,
-    ),
-    Booking(
-      discountName: 'Free Haircut with Color Treatment',
-      storeName: 'Glamour Hair Salon',
-      time: '11:30 AM, May 16',
-      initialPrice: 150.0,
-      discount: 100, // Free haircut, so discount is 100%
-      priceAfterDiscount: 0.0, // Price becomes 0 after discount
-    ),
-    Booking(
-      discountName: '50% Off on Full Makeup Session',
-      storeName: 'Beauty Makeup Studio',
-      time: '9:00 AM, May 17',
-      initialPrice: 80.0,
-      discount: 50,
-      priceAfterDiscount: 40.0,
-    ),
-    Booking(
-      discountName: '10% Off on Car Repair Services',
-      storeName: 'AutoFix Garage',
-      time: '2:00 PM, May 18',
-      initialPrice: 200.0,
-      discount: 10,
-      priceAfterDiscount: 180.0,
-    ),
-    Booking(
-      discountName: 'Special Discount on House Cleaning',
-      storeName: 'CleanPro Services',
-      time: '12:00 PM, May 19',
-      initialPrice: 120.0,
-      discount: 25,
-      priceAfterDiscount: 90.0,
-    ),
-    Booking(
-      discountName: '20% Off on Pet Grooming',
-      storeName: 'Paws & Claws Pet Spa',
-      time: '3:30 PM, May 20',
-      initialPrice: 60.0,
-      discount: 20,
-      priceAfterDiscount: 48.0,
-    ),
-    Booking(
-      discountName: '15% Off on Photography Session',
-      storeName: 'Capture Moments Photography',
-      time: '10:00 AM, May 21',
-      initialPrice: 180.0,
-      discount: 15,
-      priceAfterDiscount: 153.0,
-    ),
-    Booking(
-      discountName: 'Special Discount on Lawn Care Services',
-      storeName: 'GreenThumb Landscapes',
-      time: '8:00 AM, May 22',
-      initialPrice: 90.0,
-      discount: 40,
-      priceAfterDiscount: 54.0,
-    ),
-    Booking(
-      discountName: 'Free Fitness Class for New Members',
-      storeName: 'FitZone Gym',
-      time: '6:00 PM, May 23',
-      initialPrice: 0.0, // Free class, so initial price is 0
-      discount: 100, // Free class, so discount is 100%
-      priceAfterDiscount: 0.0, // Price becomes 0 after discount
-    ),
-    Booking(
-      discountName: '20% Off on Tutoring Services',
-      storeName: 'SmartKids Learning Center',
-      time: '4:00 PM, May 24',
-      initialPrice: 200.0,
-      discount: 20,
-      priceAfterDiscount: 160.0,
-    ),
-  ];
+  @override
+  // ignore: library_private_types_in_public_api
+  _BookingsTabState createState() => _BookingsTabState();
+}
 
-  String _truncateWithEllipsis(String text, int maxLength) {
-    return (text.length <= maxLength)
-        ? text
-        : '${text.substring(0, maxLength)}...';
+class _BookingsTabState extends State<BookingsTab> {
+  final List<Booking> bookings = [];
+
+  final storage = const FlutterSecureStorage();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchBookings();
   }
 
+  Future<void> fetchBookings() async {
+    final String? userDataString = await storage.read(key: 'userData');
+
+    if (userDataString != null) {
+      final userData = jsonDecode(userDataString);
+      final String? token = userData['token'];
+
+      if (token != null) {
+        const url = 'https://d3-api.onrender.com/api/v1/bookings/user/get';
+
+        final response = await http.get(
+          Uri.parse(url),
+          headers: <String, String>{
+            'Authorization': 'Bearer $token',
+          },
+        );
+
+        if (response.statusCode == 200) {
+          final List<dynamic> responseData =
+              jsonDecode(response.body)['bookings'];
+
+          setState(() {
+            bookings.clear();
+            for (var bookingData in responseData) {
+              bookings.add(Booking.fromJson(bookingData));
+            }
+          });
+        } else {
+          throw Exception('Failed to load bookings');
+        }
+      } else {
+        throw Exception('Token not found in userData');
+      }
+    } else {
+      throw Exception('User data not found in secure storage');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +69,11 @@ class BookingsTab extends StatelessWidget {
       itemBuilder: (context, index) {
         final booking = bookings[index];
         return ListTile(
-          title: Text(booking.discountName),
+          title: Text(
+            booking.discountName.length > 13
+                ? '${booking.discountName.substring(0, 13)}...'
+                : booking.discountName,
+          ),
           subtitle: Text(booking.storeName),
           trailing: Text(booking.time),
           onTap: () {
@@ -125,7 +96,7 @@ class BookingsTab extends StatelessWidget {
             children: [
               const Text(
                 'Booking Details',
-                 textAlign: TextAlign.center,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -136,13 +107,10 @@ class BookingsTab extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'Discount',
+                    'Name',
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
-                  Text(
-                    _truncateWithEllipsis(booking.discountName,
-                        20),
-                  ),
+                  Text(booking.discountName),
                 ],
               ),
               const SizedBox(height: 12),
@@ -175,7 +143,7 @@ class BookingsTab extends StatelessWidget {
                     'Initial Price',
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
-                  Text('\Kes ${booking.initialPrice.toStringAsFixed(2)}'),
+                  Text('Kes ${booking.initialPrice.toStringAsFixed(2)}'),
                 ],
               ),
               const SizedBox(height: 12),
@@ -183,10 +151,13 @@ class BookingsTab extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    '% discount',
+                    'Discount',
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
-                  Text('${booking.discount}%'),
+                  Text(booking.discount.toString().replaceAllMapped(
+                        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                        (Match m) => '${m[1]},',
+                      )),
                 ],
               ),
               const SizedBox(height: 12),
@@ -197,13 +168,16 @@ class BookingsTab extends StatelessWidget {
                     'Price After Discount',
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
-                  Text('\Kes ${booking.priceAfterDiscount.toStringAsFixed(2)}'),
+                  Text(
+                      'Kes ${booking.priceAfterDiscount.toStringAsFixed(2).replaceAllMapped(
+                            RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                            (Match m) => '${m[1]},',
+                          )}'),
                 ],
               ),
               const SizedBox(height: 16),
               TextButton(
-                onPressed: () {
-                },
+                onPressed: () {},
                 style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all<Color>(primaryColor),
@@ -226,5 +200,4 @@ class BookingsTab extends StatelessWidget {
       },
     );
   }
-
 }

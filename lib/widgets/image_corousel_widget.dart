@@ -51,7 +51,6 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
               builder: (BuildContext context) {
                 return Container(
                   width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),

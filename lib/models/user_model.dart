@@ -26,7 +26,7 @@ class User {
       password: json['password'],
       role: json['role'],
       token: json['token'] ??
-          '', // Set token from JSON, defaulting to empty string if not provided
+          '',
     );
   }
 }
